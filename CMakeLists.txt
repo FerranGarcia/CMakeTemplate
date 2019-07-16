@@ -17,8 +17,7 @@ configure_file (
   )
 
 
-# Add bar Library
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/bar")
+# Add Boost
 find_package(Boost 1.54 REQUIRED COMPONENTS regex)
 
 
@@ -43,7 +42,7 @@ target_include_directories(foo
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
   PRIVATE
-      ${CMAKE_SOURCE_DIR}/include #This should not be needed
+      ${CMAKE_SOURCE_DIR}/include
       ${CMAKE_CURRENT_SOURCE_DIR}/src
       ${PROJECT_BINARY_DIR}
 )
@@ -55,5 +54,5 @@ target_link_libraries(foo
     PUBLIC
         Boost::boost
     PRIVATE
-        Bar::bar
+        
 )

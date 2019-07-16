@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <math.h>
+
 #include "FooConfig.hpp"
 
 #include "foo/foo.h"	//external
-#include <bar/bar.h>	//another libray
 #include <foo.h> 		//internal
 
 
@@ -27,12 +28,6 @@ double foo::mysqrt(const int &inputValue)
 	}
 
 	return 1.0;
-}
-
-// Just using another package
-double foo::mylog(const int &inputValue)
-{
-	return bar::mylog(inputValue);
 }
 
 bool foo::is_int(const boost::any & operand)
