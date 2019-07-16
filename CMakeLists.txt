@@ -56,3 +56,48 @@ target_link_libraries(foo
     PRIVATE
         
 )
+
+# Installation instructions
+# Install library (.a or .so) and register in the export
+include(GNUInstallDirs)
+set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/foo)
+
+install(TARGETS foo
+    EXPORT foo-targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+#This is required so that the exported target has the name Foo and not foo
+set_target_properties(foo PROPERTIES EXPORT_NAME Foo)
+
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+# Install the export defined above
+install(EXPORT foo-targets
+  FILE
+    FooTargets.cmake
+  NAMESPACE
+    Foo::
+  DESTINATION
+    ${CMAKE_INSTALL_LIBDIR}/cmake/foo
+)
+
+# Import your targets inside your Config.cmake
+include(CMakePackageConfigHelpers)
+configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/FooConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/FooConfig.cmake
+    INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
+)
+
+#Install the config
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/FooConfig.cmake
+    DESTINATION ${INSTALL_CONFIGDIR}
+)
+
+## Exporting from the build tree
+export(EXPORT foo-targets FILE ${CMAKE_CURRENT_BINARY_DIR}/FooTargets.cmake NAMESPACE Foo::)
+
+#Register package in user's package registry
+export(PACKAGE Foo)
