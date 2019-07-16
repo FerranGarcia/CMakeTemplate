@@ -1,0 +1,3 @@
+// the configured options and settings for Foo
+#define Foo_VERSION_MAJOR @Foo_VERSION_MAJOR@
+#define Foo_VERSION_MINOR @Foo_VERSION_MINOR@
